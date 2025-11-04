@@ -1,31 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Home, Brain, Atom, Leaf, Telescope, User, MessageSquare } from 'lucide-react';
 
-// Subtle cursor-follow glow that never blocks interactions
-export default function UIOverlay() {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+const tabs = [
+  { key: 'genesis', label: 'Genesis', Icon: Home },
+  { key: 'ai', label: 'AI', Icon: Brain },
+  { key: 'quantum', label: 'Quantum', Icon: Atom },
+  { key: 'sustainability', label: 'Sustainability', Icon: Leaf },
+  { key: 'future', label: 'Future Vision', Icon: Telescope },
+  { key: 'visionary', label: 'Visionary', Icon: User },
+  { key: 'contact', label: 'Contact', Icon: MessageSquare },
+];
 
-  useEffect(() => {
-    const onMove = (e) => {
-      setPos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
-  }, []);
-
+export default function UIOverlay({ currentScene, onNavigate }) {
   return (
-    <div className="pointer-events-none fixed inset-0 z-30">
-      <div
-        className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{
-          left: pos.x,
-          top: pos.y,
-          width: 260,
-          height: 260,
-          background: 'radial-gradient(circle, rgba(0,255,255,0.08), rgba(127,0,255,0.04) 60%, transparent 70%)',
-          filter: 'blur(20px)',
-          transition: 'left 100ms linear, top 100ms linear',
-        }}
-      />
+    <div className="relative z-20 w-full">
+      <div className="mx-auto mt-4 flex max-w-6xl flex-wrap items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-3 backdrop-blur">
+        {tabs.map(({ key, label, Icon }) => {
+          const active = key === currentScene;
+          return (
+            <button
+              key={key}
+              onClick={() => onNavigate(key)}
+              className={`inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition ${active ? 'bg-white/20 text-white' : 'text-white/80 hover:bg-white/10 hover:text-white'}`}
+            >
+              <Icon className="h-4 w-4" />
+              <span className="hidden sm:block">{label}</span>
+            </button>
+          );
+        })}
+        <div className="ml-auto hidden text-xs text-white/60 sm:block">NovaEra Hub</div>
+      </div>
     </div>
   );
 }

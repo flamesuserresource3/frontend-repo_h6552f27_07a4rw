@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SceneManager from './components/SceneManager';
 import UIOverlay from './components/UIOverlay';
 import Footer from './components/Footer';
 
-function App() {
+export default function App() {
+  const [currentScene, setCurrentScene] = useState('genesis');
+
   return (
-    <div className="min-h-screen w-full bg-[#000814] text-white">
-      {/* Global UI overlay effects (non-blocking) */}
-      <UIOverlay />
-
-      {/* Multi-scene manager with cinematic 3D-feel transitions */}
-      <SceneManager />
-
-      {/* Footer */}
+    <div className="relative min-h-screen w-full bg-black text-white">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-6">
+        <UIOverlay currentScene={currentScene} onNavigate={setCurrentScene} />
+        <div className="mt-4" />
+        <SceneManager currentScene={currentScene} onNavigate={setCurrentScene} />
+      </div>
       <Footer />
     </div>
   );
 }
-
-export default App;
