@@ -1,14 +1,22 @@
 import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Brain, User } from 'lucide-react';
+import { Home, Brain, Atom, Leaf, Telescope, User, MessageSquare } from 'lucide-react';
 import DomeIntro from './DomeIntro';
 import AiRealm from './AiRealm';
+import QuantumRealm from './QuantumRealm';
+import SustainabilityRealm from './SustainabilityRealm';
+import FutureVision from './FutureVision';
 import VisionaryChamber from './VisionaryChamber';
+import ContactFeed from './ContactFeed';
 
 const scenes = [
   { id: 'genesis', label: 'Genesis Dome', icon: Home },
   { id: 'ai', label: 'AI Realm', icon: Brain },
+  { id: 'quantum', label: 'Quantum', icon: Atom },
+  { id: 'sustainability', label: 'Sustainability', icon: Leaf },
+  { id: 'future', label: 'Future Vision', icon: Telescope },
   { id: 'visionary', label: 'Visionary', icon: User },
+  { id: 'contact', label: 'Contact', icon: MessageSquare },
 ];
 
 const transitionVariants = {
@@ -36,8 +44,16 @@ export default function SceneManager() {
     switch (active) {
       case 'ai':
         return AiRealm;
+      case 'quantum':
+        return QuantumRealm;
+      case 'sustainability':
+        return SustainabilityRealm;
+      case 'future':
+        return FutureVision;
       case 'visionary':
         return VisionaryChamber;
+      case 'contact':
+        return ContactFeed;
       case 'genesis':
       default:
         return DomeIntro;
@@ -52,7 +68,7 @@ export default function SceneManager() {
           <div className="text-sm uppercase tracking-widest text-cyan-300" style={{ fontFamily: 'Orbitron, Inter, sans-serif' }}>
             NovaEra Hub
           </div>
-          <nav className="flex items-center gap-2">
+          <nav className="flex flex-wrap items-center gap-2">
             {scenes.map(({ id, label, icon: Icon }) => {
               const activeState = active === id;
               return (
